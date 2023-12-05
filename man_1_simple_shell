@@ -21,16 +21,16 @@ OPTIONS
        Simple Shell has no command-line options.
 
 COMMANDS
-       The shell supports simple commands without arguments. It does not handle special characters
+       The shell supports simple commands without arguments. It does not handle special chars
        like ", ', `, \, *, &, #.
 
        Supported built-ins:
-           exit: Exits the shell. No arguments are accepted.
+           exit: closes the shell. No arguments are accepted.
            env: Prints the current environment.
 
        Unsupported features:
            Path handling: The shell does not use the PATH to locate executables.
-           Special characters: Special characters and advanced features are not supported.
+           Special chars: Special chars and advanced features are not supported.
 
 EXAMPLES
        Interactive mode:

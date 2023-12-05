@@ -9,7 +9,7 @@ C - Simple Shell
 </p>
 
 <p align="center">
-This project is an implementation of a simple shell that ALX Africa Software Engineering developed as a Peer Programming project for the C code. </br>
+This project is an implementation of a simple shell that was developed as a Peer Programming project for C programming language. </br>
 This first trimester project teaches students the more complex ideas underlying the shell program, including as processes, system calls, bit manipulation, file management, and error handling. </br>
 
 Shell is a basic command interpreter for UNIX that mimics the features of the simple shell (sh). </br>
@@ -47,7 +47,7 @@ Our shell has support for the following built-in commands:
 | setenv [var][value] | Set an environment variable and value. If the variable exists, the value will be updated. |
 | alias[name[='value]]| Reads aliases name                                                                        |
 | unsetenv [var]      | Remove an environment variable.                                                           |
-| cd [dir]            | Change the directory.                                                                     |
+| cd [dir]            | Change the folder.                                                                     |
 | help [built-in]     | Read documentation for a built-in.                                                        |
 
 
