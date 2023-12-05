@@ -40,12 +40,12 @@ int _mycd(info_t *info)
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
 
-	// Get the current working directory
+	/* Get the current working directory */
 	s = getcwd(buffer, 1024);
 	if (!s)
 		_puts("TODO: Handle getcwd failure\n");
 
-	// If no argument provided, change to the home directory
+	/* If no argument provided, change to the home directory */
 	if (!info->argv[1])
 	{
 		dir = _getenv(info, "HOME=");
@@ -54,7 +54,7 @@ int _mycd(info_t *info)
 		else
 			chdir_ret = chdir(dir);
 	}
-	// If the argument is "-", change to the previous directory (OLDPWD)
+	/* If the argument is "-", change to the previous directory (OLDPWD) */
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
 		if (!_getenv(info, "OLDPWD="))
@@ -66,17 +66,17 @@ int _mycd(info_t *info)
 		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
 		chdir_ret = chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
-	// Change to the specified directory
+	/* Change to the specified directory */
 	else
 		chdir_ret = chdir(info->argv[1]);
 
-	// Handle errors if chdir fails
+	/* Handle errors if chdir fails */
 	if (chdir_ret == -1)
 	{
 		print_error(info, "can't cd to ");
 		_eputs(info->argv[1]), _eputchar('\n');
 	}
-	// Update environment variables (OLDPWD and PWD) on success
+	/* Update environment variables (OLDPWD and PWD) on success */
 	else
 	{
 		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
