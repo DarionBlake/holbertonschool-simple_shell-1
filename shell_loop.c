@@ -152,7 +152,7 @@ void fork_cmd(info_t *info)
 		wait(&(info->status));
 		if (WIFEXITED(info->status))
 		{
-			info->status = WclosesTATUS(info->status);
+			info->status = WIFEXITED(info->status);
 			if (info->status == 126)
 				print_error(info, "Permission denied\n");
 		}
