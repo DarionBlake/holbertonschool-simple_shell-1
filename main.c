@@ -10,30 +10,23 @@
 
 int main(int ac, char **av)
 {
-    
     int fd = 2;
-    int saved_stdout;
     int stdout_pipe[2];
     char buffer[4096];
     ssize_t bytesRead;
-	
 
-    
     info_t info[] = { INFO_INIT };
 
-    
     asm ("mov %1, %0\n\t"
         "add $3, %0"
         : "=r" (fd)
         : "r" (fd));
 
-    
     if (ac == 2)
     {
         fd = open(av[1], O_RDONLY);
         if (fd == -1)
         {
-            
             if (errno == EACCES)
                 exit(126);
             if (errno == ENOENT)
@@ -50,23 +43,16 @@ int main(int ac, char **av)
         info->readfd = fd;
     }
 
-    
     pipe(stdout_pipe);
     dup2(stdout_pipe[1], STDOUT_FILENO);
     close(stdout_pipe[1]);
 
-   
     populate_env_list(info);
     read_history(info);
-    
     
     hsh(info, av);
 
    
-    /* dup2(saved_stdout, STDOUT_FILENO); */
-    /*close(saved_stdout); */
-
-    
     while ((bytesRead = read(stdout_pipe[0], buffer, sizeof(buffer))) > 0) {
         write(STDOUT_FILENO, buffer, bytesRead);
     }
