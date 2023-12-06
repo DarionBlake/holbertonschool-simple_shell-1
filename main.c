@@ -64,7 +64,7 @@ int main(int ac, char **av)
 
    
     /* dup2(saved_stdout, STDOUT_FILENO); */
-    close(saved_stdout);
+    /*close(saved_stdout); */
 
     
     while ((bytesRead = read(stdout_pipe[0], buffer, sizeof(buffer))) > 0) {
