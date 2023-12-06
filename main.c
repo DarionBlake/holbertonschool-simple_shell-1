@@ -16,6 +16,7 @@ int main(int ac, char **av)
     int stdout_pipe[2];
     char buffer[4096];
     ssize_t bytesRead;
+	int dup2;
 
     
     info_t info[] = { INFO_INIT };
