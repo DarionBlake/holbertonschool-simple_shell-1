@@ -74,7 +74,7 @@ int main(int ac, char **av)
         info->readfd = fd;
     }
 
-    // Redirect stdout to a file descriptor (e.g., a pipe)
+    /* Redirect stdout to a file descriptor (e.g., a pipe) */ 
     int saved_stdout = dup(STDOUT_FILENO);
     int stdout_pipe[2];
     pipe(stdout_pipe);
@@ -85,11 +85,11 @@ int main(int ac, char **av)
     read_history(info);
     hsh(info, av);
 
-    // Restore original stdout
+    /* Restore original stdout */ 
     dup2(saved_stdout, STDOUT_FILENO);
     close(saved_stdout);
 
-    // Print the contents of stdout_pipe[0]
+    /* Print the contents of stdout_pipe[0]*/
     char buffer[4096];
     ssize_t bytesRead;
     while ((bytesRead = read(stdout_pipe[0], buffer, sizeof(buffer))) > 0) {
