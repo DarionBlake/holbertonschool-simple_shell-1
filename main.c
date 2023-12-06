@@ -16,7 +16,7 @@ int main(int ac, char **av)
     int stdout_pipe[2];
     char buffer[4096];
     ssize_t bytesRead;
-	int dup2;
+	
 
     
     info_t info[] = { INFO_INIT };
@@ -63,7 +63,7 @@ int main(int ac, char **av)
     hsh(info, av);
 
    
-    dup2(saved_stdout, STDOUT_FILENO);
+    /* dup2(saved_stdout, STDOUT_FILENO); */
     close(saved_stdout);
 
     
