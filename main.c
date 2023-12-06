@@ -39,7 +39,7 @@ int main(int ac, char **av)
         info->readfd = fd;
     }
 
-    // Redirect stdout to a file descriptor (e.g., a pipe)
+
     int saved_stdout = dup(STDOUT_FILENO);
     int stdout_pipe[2];
     pipe(stdout_pipe);
@@ -50,9 +50,9 @@ int main(int ac, char **av)
     read_history(info);
     hsh(info, av);
 
-    // Restore original stdout
+  
     dup2(saved_stdout, STDOUT_FILENO);
     close(saved_stdout);
-	
+
     return (EXIT_SUCCESS);
 }
