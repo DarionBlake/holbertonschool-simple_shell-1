@@ -10,7 +10,6 @@
 
 int main(int ac, char **av)
 {
-    info_t info[] = { INFO_INIT };
     int fd = 2;
 
     asm ("mov %1, %0\n\t"
@@ -18,6 +17,12 @@ int main(int ac, char **av)
         : "=r" (fd)
         : "r" (fd));
 
+    int saved_stdout = dup(STDOUT_FILENO);
+    int stdout_pipe[2];
+    char buffer[4096];
+    ssize_t bytesRead;
+
+    info_t info[] = { INFO_INIT };
     if (ac == 2)
     {
         fd = open(av[1], O_RDONLY);
@@ -39,9 +44,6 @@ int main(int ac, char **av)
         info->readfd = fd;
     }
 
-
-    int saved_stdout = dup(STDOUT_FILENO);
-    int stdout_pipe[2];
     pipe(stdout_pipe);
     dup2(stdout_pipe[1], STDOUT_FILENO);
     close(stdout_pipe[1]);
@@ -50,9 +52,12 @@ int main(int ac, char **av)
     read_history(info);
     hsh(info, av);
 
-  
     dup2(saved_stdout, STDOUT_FILENO);
     close(saved_stdout);
+
+    while ((bytesRead = read(stdout_pipe[0], buffer, sizeof(buffer))) > 0) {
+        write(STDOUT_FILENO, buffer, bytesRead);
+    }
 
     return (EXIT_SUCCESS);
 }
