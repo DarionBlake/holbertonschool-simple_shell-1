@@ -1,46 +1,44 @@
 #include "shell.h"
 
 /**
-* main - entry point
-* @arg_count: arg count
-* @arg_vect: arg vector
-*
-* Return: 0 on success, 1 on error
-*/
-
-int main(int arg_count, char **arg_vect)
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
+ *
+ * Return: 0 on success, 1 on error
+ */
+int main(int ac, char **av)
 {
 	info_t info[] = { INFO_INIT };
-	int file_descriptor = 2;
+	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
-	"add $3, %0"
-	: "=r" (file_descriptor)
-	: "r" (file_descriptor));
-	if (arg_count == 2)
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
+
+	if (ac == 2)
 	{
-		file_descriptor = open(arg_vect[1], O_RDONLY);
-		if (file_descriptor == -1)
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
 			if (errno == EACCES)
-			{
-				fprintf(stderr, "Error: Permission denied to open %s\n",
-				arg_vect[1]);
-				exit(98);
-			}
+				exit(126);
 			if (errno == ENOENT)
 			{
-				fprintf(stderr, "%s: 0: Can't open %s\n", arg_vect[0],
-				arg_vect[1]);
-				exit(98);
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
+				exit(127);
 			}
-			fprintf(stderr, "Error: Failed to open %s\n", arg_vect[1]);
 			return (EXIT_FAILURE);
 		}
-		info->readfd = file_descriptor;
+		info->readfd = fd;
 	}
 	populate_env_list(info);
 	read_history(info);
-	hsh(info, arg_vect);
+	hsh(info, av);
 	return (EXIT_SUCCESS);
 }

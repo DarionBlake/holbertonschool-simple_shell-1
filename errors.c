@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _eputs - prints an input string to stderr
+ *_eputs - prints an input string
  * @str: the string to be printed
  *
  * Return: Nothing
@@ -11,10 +11,7 @@ void _eputs(char *str)
 	int i = 0;
 
 	if (!str)
-	{
-		fprintf(stderr, "Error: _eputs() called with NULL string\n");
 		return;
-	}
 	while (str[i] != '\0')
 	{
 		_eputchar(str[i]);
@@ -23,30 +20,30 @@ void _eputs(char *str)
 }
 
 /**
- * _eputchar - writes the character c to stderr
- * @c: The character to print
+ * _eputchar - writes the char c to stderr
+ * @c: The char to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
 int _eputchar(char c)
 {
-	static int buf_index;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || buf_index >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(STDERR_FILENO, buf, buf_index);
-		buf_index = 0;
+		write(2, buf, i);
+		i = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[buf_index++] = c;
+		buf[i++] = c;
 	return (1);
 }
 
 /**
- * _putfd - writes the character c to given fd
- * @c: The character to print
+ * _putfd - writes the char c to given fd
+ * @c: The char to print
  * @fd: The filedescriptor to write to
  *
  * Return: On success 1.
@@ -54,21 +51,21 @@ int _eputchar(char c)
  */
 int _putfd(char c, int fd)
 {
-	static int buf_index;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || buf_index >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, buf_index);
-		buf_index = 0;
+		write(fd, buf, i);
+		i = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[buf_index++] = c;
+		buf[i++] = c;
 	return (1);
 }
 
 /**
- *_putsfd - prints an input string to given fd
+ *_putsfd - prints an input string
  * @str: the string to be printed
  * @fd: the filedescriptor to write to
  *
@@ -76,16 +73,13 @@ int _putfd(char c, int fd)
  */
 int _putsfd(char *str, int fd)
 {
-	int char_count = 0;
+	int i = 0;
 
 	if (!str)
-	{
-		fprintf(stderr, "Error: _putsfd() called with NULL string\n");
 		return (0);
-	}
 	while (*str)
 	{
-		char_count += _putfd(*str++, fd);
+		i += _putfd(*str++, fd);
 	}
-	return (char_count);
+	return (i);
 }
