@@ -1,0 +1,81 @@
+Simple Shell(1)                                                        Simple Shell(1)
+
+NAME
+       simple_shell - a simple UNIX command line interpreter
+
+SYNOPSIS
+       simple_shell
+
+DESCRIPTION
+       Simple Shell is a basic command line interpreter that allows users to execute simple
+       commands. It handles single-word command lines without any advanced features like
+       semicolons, pipes, or redirections.
+
+USAGE
+       Simple Shell displays a prompt and waits for the user to type a command. A command line
+       always ends with a new line. The prompt is displayed again after each command execution.
+       If an executable cannot be found, an error message is printed, and the prompt is displayed
+       again. The shell handles errors gracefully, including the "end of file" condition (Ctrl+D).
+
+OPTIONS
+       Simple Shell has no command-line options.
+
+COMMANDS
+       The shell supports simple commands without arguments. It does not handle special chars
+       like ", ', `, \, *, &, #.
+
+       Supported built-ins:
+           exit: closes the shell. No arguments are accepted.
+           env: Prints the current environment.
+
+       Unsupported features:
+           Path handling: The shell does not use the PATH to locate executables.
+           Special chars: Special chars and advanced features are not supported.
+
+EXAMPLES
+       Interactive mode:
+           $ ./simple_shell
+           # /bin/ls
+           hsh main.c shell.c
+           #
+           # exit
+           $
+
+       Non-interactive mode:
+           $ echo "/bin/ls" | ./simple_shell
+           hsh main.c shell.c
+
+FILES
+       README.md: Information about the shell and its usage.
+       man_1_simple_shell: This manual page.
+       AUTHORS: List of contributors to the repository.
+
+COMPILATION
+       The shell is compiled using the following command:
+           gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell
+
+TESTING
+       Interactive mode:
+           $ ./simple_shell
+           # /bin/ls
+           hsh main.c shell.c
+           # exit
+           $
+
+       Non-interactive mode:
+           $ echo "/bin/ls" | ./simple_shell
+           hsh main.c shell.c
+
+BUGS
+       No known bugs.
+
+AUTHORS
+       The Simple Shell was created by Junius Whitaker and contributors.
+
+SEE ALSO
+       The Betty style guide, available at https://github.com/holbertonschool/Betty
+
+COPYRIGHT
+       This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+       without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+       See the GNU General Public License for more details.
