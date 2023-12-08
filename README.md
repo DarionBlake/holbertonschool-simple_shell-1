@@ -80,7 +80,7 @@ https://github.com/holbertonfalcon/simple_shell.git
 !
 
 ## Contributors :
-* [**Junius Whitaker**](https://github.com/holbertonfalcon)
+* [**Darion Woodard**](https://github.com/DarionBlake)
 
 
 
